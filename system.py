@@ -1,9 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
-#betrakter ligningen m*x'' + c*x' + k*x = 0
-#om c^2-4mk < 0 får vi svinging
 
-#denne svingingen tilsvarer formelen
+#betrakter ligningen m*x'' + c*x' + k*x = 0
+#om c^2-4mk < 0 får vi svinging, tilsvarer zeta < 1,0
+
+#start betingelser 
+x0 = 1
+v0 = 0
 
 t = np.linspace(0,10,1000)
 m = 1
