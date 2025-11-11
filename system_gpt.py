@@ -2,13 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Initialbetingelser
-x0 = 5      # forskyvning ved t=0
+x0 = 1     # forskyvning ved t=0
 v0 = 0      # hastighet ved t=0
 
 # Systemparametre
 m = 1
-c = 1
-k = 10
+c = 0.5
+k = 20
 t = np.linspace(0, 10, 1000)
 
 # Beregninger
