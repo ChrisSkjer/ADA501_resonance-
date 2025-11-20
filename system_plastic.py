@@ -7,7 +7,7 @@ m = 1.0      # Masse [kg]
 c = 2.0      # Demping [Ns/m]
 k = 1000.0   # Fjærstivhet [N/m]
 Fy = 100.0   # Flytegrense [N]
-F0 = 120.0   # Amplitude ytre kraft
+F0 = 110.0   # Amplitude ytre kraft
 omega = 2.0  # Frekvens ytre kraft
 
 # Fjærkraft: elastisk-plastisk
