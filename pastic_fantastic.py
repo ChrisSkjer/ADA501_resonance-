@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Systemparametere
 m = 1.0      # Masse [kg]
-c = 6.0      # Demping [Ns/m]
+c = 3.0      # Demping [Ns/m]
 k = 1000.0   # Fjærstivhet [N/m]
 Fy = 132.0   # Flytegrense [N]
 F0 = 150     # Amplitude ytre kraft
@@ -12,8 +12,8 @@ omega = 2.0  # Frekvens ytre kraft
 
 # Ytre kraft: kort puls
 def external_force(t):
-    return F0 if 0 <= t <= 0.2 else 0.0
-    #return F0*np.sin(2*np.pi*t)
+    #return F0 if 0 <= t <= 0.2 else 0.0
+    return F0*np.sin(2*np.pi*t) if 0 <= t <= 5 else 0.0
 # ODE-system med plastisk deformasjon
 def system(t, y):
     x, v, x_p = y
@@ -84,3 +84,5 @@ plt.grid()
 plt.legend()
 plt.tight_layout()
 plt.show()
+
+
