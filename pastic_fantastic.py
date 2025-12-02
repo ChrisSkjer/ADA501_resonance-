@@ -40,7 +40,7 @@ def system(t, y):
 # Initialverdier og tidsoppløsning
 y0 = [0.0, 0.0, 0.0]  # x, v, x_p
 t_span = (0, 10)
-t_eval = np.linspace(*t_span, 2000)
+t_eval = np.linspace(*t_span, 5000)
 sol = solve_ivp(system, t_span, y0, t_eval=t_eval)
 
 # Hent løsninger
