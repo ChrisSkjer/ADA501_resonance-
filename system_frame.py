@@ -9,11 +9,11 @@ Wpl = 2*41.5*10**3 #mm^3
 fy = 355 #N/mm^2
 
 # Parametre (sett disse til dine faktiske verdier)
-m_kg = 1000.0
+m_kg = 100.0
 m = m_kg / 1000.0   # omregning til N·s²/mm       
-c   = 0.1          # demping
+c   = 2.5          # demping
 Mp  = fy*Wpl          # Nmm plastisk momentkapasitet for tverrsnittet
-h   = 2000           # søylehøyde
+h   = 6000           # søylehøyde
 k_el = 6*E*Iy/h**3        
 
 # Flytekraft og flyteforskyvning
@@ -22,12 +22,13 @@ x_y  = Fy / k_el            # flyteforskyvning (elastisk del)
 
 print("Flytekraft Fy =", Fy, "N")
 print("Flyteforskyvning x_y =", x_y, "mm")
+print("dempingsforholdet er", 0.05*2*np.sqrt(m*k_el))
 
 # Last som funksjon av tid
 def F_ext(t):
     # F.eks. lastpuls som driver systemet inn i plastisk
-    if 0.5 < t < 2.0:
-        return 10000
+    if 0.5 < t < 1.0:
+        return 5000
     else:
         return 0.0
 
@@ -71,13 +72,33 @@ x  = sol.y[0]    # total forskyvning
 v  = sol.y[1]    # hastighet
 xp = sol.y[2]    # plastisk forskyvning (varig del)
 
-# Plot total og plastisk forskyvning
+# Beregn fjærkraft f(t)
+f_hist = []
+for xi, vi, xpi in zip(x, v, xp):
+    x_e = xi - xpi
+    f   = k_el * x_e
+    if abs(x_e) > x_y and f * vi > 0:
+        f = Fy * np.sign(x_e)
+    f_hist.append(f)
+f_hist = np.array(f_hist)
+
+# Plot 1: forskyvning
 plt.figure()
-plt.plot(t, x,  label="x(t) total")
+plt.plot(t, x, label="x(t) total")
 plt.plot(t, xp, "--", label="x_p(t) plastisk")
 plt.xlabel("Tid [s]")
-plt.ylabel("Forskyvning [m]")
-plt.title("Dynamisk respons med varig plastisk deformasjon\n(flytegrense basert på forskyvning)")
+plt.ylabel("Forskyvning [mm]")
+plt.title("Forskyvning over tid")
 plt.grid(True)
 plt.legend()
+
+# Plot 2: fjærkraft
+plt.figure()
+plt.plot(t, f_hist, label="fjærkraft f(t)")
+plt.xlabel("Tid [s]")
+plt.ylabel("Kraft [N]")
+plt.title("Fjærkraft over tid")
+plt.grid(True)
+plt.legend()
+
 plt.show()
