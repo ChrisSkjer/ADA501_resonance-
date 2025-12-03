@@ -72,7 +72,7 @@ plt.legend()
 plt.grid()
 
 plt.tight_layout()
-plt.show()
+
 
 # Kraft–forskyvning (hysterese) plot
 plt.figure(figsize=(6, 5))
@@ -84,5 +84,6 @@ plt.grid()
 plt.legend()
 plt.tight_layout()
 plt.show()
+
 
 
