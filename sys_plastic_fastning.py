@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 # Materialparametre HEA100 (mm–N–s-system)
 E   = 210000          # N/mm^2
 Iy  = 3.49e6          # mm^4
-Wpl = 2*41.5e3        # mm^3 
+Wpl = 83e3        # mm^3 
+Wel = 72.8e3
 fy  = 355             # N/mm^2
 
 # Systemparametre
@@ -13,15 +14,16 @@ m_kg = 11000.0
 m    = m_kg / 1000.0   # N*s^2/mm  (masse i mm-systemet)
 c    = 2.3            # N*s/mm    (demping)
 Mp   = fy * Wpl        # Nmm       (plastisk momentkapasitet)
+Mel = fy*Wel
 h    = 2000.0          # mm        (søylehøyde)
 k_el = 6*E*Iy/h**3     # N/mm      (elastisk stivhet i topp)
 
 # Flytenivå (start)
-Fy  = 2*Mp / h          # N
+Fy  = 2*Mel / h          # N
 x_y = Fy / k_el       # mm (elastisk flyteforskyvning)
 
 # Bilinjær hardening: liten stivhet etter flyt
-alpha  = 0.05          # 5 % av elastisk stivhet
+alpha  = 0.01          # 1 % av elastisk stivhet
 k_pl   = alpha * k_el  # N/mm
 
 print("Fy  =", Fy, "N")
@@ -59,7 +61,7 @@ def rhs(t, y):
     return [v, a, x_p_dot]
 
 # Integrasjon
-t_span = (0.0, 10.0)
+t_span = (0.0, 60.0)
 t_eval = np.linspace(*t_span, 2001)
 y0 = [0.0, 0.0, 0.0]   # x, v, x_p
 
